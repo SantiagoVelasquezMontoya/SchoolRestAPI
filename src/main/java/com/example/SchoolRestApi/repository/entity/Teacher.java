@@ -1,38 +1,34 @@
 package com.example.SchoolRestApi.repository.entity;
 
 
-import com.example.SchoolRestApi.dto.AlumnDTO;
+import com.example.SchoolRestApi.dto.TeacherDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class Alumn {
+public class Teacher {
 
     @Id
     private Integer id;
     private String firstname;
     private String lastname;
-    private String birthdate;
     private Integer age;
 
-
-    public Alumn(Integer id, String firstname, String lastname, String birthdate, Integer age) {
+    public Teacher(Integer id, String firstname, String lastname, Integer age) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.birthdate = birthdate;
         this.age = age;
     }
 
-    public Alumn(AlumnDTO alumnDTO) {
-        this.id = alumnDTO.getId();
-        this.firstname = alumnDTO.getFirstname();
-        this.lastname = alumnDTO.getLastname();
-        this.birthdate = alumnDTO.getBirthdate();
-        this.age = alumnDTO.getAge();
+    public Teacher(TeacherDTO teacherDTO) {
+        this.id = teacherDTO.getId();
+        this.firstname = teacherDTO.getFirstname();
+        this.lastname = teacherDTO.getLastname();
+        this.age = teacherDTO.getAge();
     }
 
-    public Alumn() {
+    public Teacher() {
     }
 
     public Integer getId() {
@@ -57,14 +53,6 @@ public class Alumn {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
     }
 
     public Integer getAge() {

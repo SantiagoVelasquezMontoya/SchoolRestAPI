@@ -25,8 +25,8 @@ public class IAlumnServiceImpl implements IAlumnService {
         if(testAlumni.isPresent()){
             return "Alumni Already Exists";
         } else{
-            alumnRepository.save(new Alumn(alumn));
-            return "Alumni Successfully Saved";
+                alumnRepository.save(new Alumn(alumn));
+                return "Alumni Successfully Saved";
         }
     }
 
