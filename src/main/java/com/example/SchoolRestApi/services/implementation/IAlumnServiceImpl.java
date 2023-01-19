@@ -4,11 +4,13 @@ import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.repository.IAlumnRepository;
 import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.services.IAlumnService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class IAlumnServiceImpl implements IAlumnService {
 
     IAlumnRepository alumnRepository;
@@ -18,8 +20,14 @@ public class IAlumnServiceImpl implements IAlumnService {
     }
 
     @Override
-    public void save(AlumnDTO alumn) {
-        alumnRepository.save(new Alumn(alumn));
+    public String save(AlumnDTO alumn) {
+        Optional<Alumn> testAlumni = alumnRepository.findById(alumn.getId());
+        if(testAlumni.isPresent()){
+            return "Alumni Already Exists";
+        } else{
+            alumnRepository.save(new Alumn(alumn));
+            return "Alumni Successfully Saved";
+        }
     }
 
     @Override
