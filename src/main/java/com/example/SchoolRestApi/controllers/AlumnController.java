@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.rmi.server.ExportException;
 import java.util.List;
 
 @RestController
@@ -38,5 +39,25 @@ public class AlumnController {
         } catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<String> deleteAlumn(@RequestBody AlumnDTO alumn){
+        try{
+            return ResponseEntity.ok(iAlumnService.delete(alumn));
+        }
+         catch (Exception e){
+            return ResponseEntity.notFound().build();
+         }
+    }
+
+    @PutMapping()
+    public ResponseEntity<String> updateAlumn(@RequestBody AlumnDTO alumn){
+        try{
+            return ResponseEntity.ok().body(iAlumnService.update(alumn));
+        }
+         catch (Exception e){
+            return ResponseEntity.notFound().build();
+         }
     }
 }
