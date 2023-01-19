@@ -2,7 +2,6 @@ package com.example.SchoolRestApi.services.implementation;
 
 import com.example.SchoolRestApi.dto.TeacherDTO;
 import com.example.SchoolRestApi.repository.ITeacherRepository;
-import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.repository.entity.Teacher;
 import com.example.SchoolRestApi.services.ITeacherService;
 import org.springframework.stereotype.Service;
@@ -12,12 +11,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ITeacherImpl implements ITeacherService {
+public class ITeacherServiceImpl implements ITeacherService {
 
 
     public final ITeacherRepository teacherRepository;
 
-    public ITeacherImpl(ITeacherRepository teacherRepository) {
+    public ITeacherServiceImpl(ITeacherRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
     }
 
