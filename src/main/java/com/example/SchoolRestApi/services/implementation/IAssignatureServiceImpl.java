@@ -78,8 +78,14 @@ public class IAssignatureServiceImpl implements IAssignatureService {
 
         if(targetTeacher.isPresent() && targetAssignature.isPresent()){
             Assignature updatedAssignature = new Assignature(new AssignatureDTO(targetAssignature.get()));
+            Teacher updatedTeacher = new Teacher(new TeacherDTO(targetTeacher.get()));
             updatedAssignature.setTeacher(targetTeacher.get());
+            //updatedTeacher.setAssignature(targetAssignature.get());
+            //targetTeacher.get().setAssignature(updatedAssignature);
+            //teacherRepository.save(targetTeacher.get());
+            //teacherRepository.save(updatedTeacher);
             assignatureRepository.save(updatedAssignature);
+
             return "The assignature " +
                     updatedAssignature.getTopic() +
                     " Was assigned to Teacher " +
