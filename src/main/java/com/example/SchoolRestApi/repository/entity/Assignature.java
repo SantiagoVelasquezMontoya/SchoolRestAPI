@@ -41,6 +41,10 @@ public class Assignature {
     public Assignature() {
     }
 
+    public Assignature(Assignature assignature) {
+    }
+
+
     public Integer getId() {
         return id;
     }
