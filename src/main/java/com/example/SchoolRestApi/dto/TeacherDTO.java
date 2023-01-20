@@ -12,14 +12,15 @@ public class TeacherDTO {
     private Integer age;
 
     @OneToOne
-    private AssignatureDTO assignatureDTO;
+    private Assignature assignature;
 
-    public AssignatureDTO getAssignatureDTO() {
-        return assignatureDTO;
+    public Assignature getAssignature() {
+        return assignature;
     }
 
-    public void setAssignatureDTO(AssignatureDTO assignatureDTO) {
-        this.assignatureDTO = assignatureDTO;
+
+    public void setAssignature(Assignature assignature) {
+        this.assignature = assignature;
     }
 
     public TeacherDTO(Integer id, String firstname, String lastname, Integer age) {
