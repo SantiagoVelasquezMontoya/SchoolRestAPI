@@ -6,6 +6,9 @@ import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.services.IAlumnService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,8 +28,10 @@ public class IAlumnServiceImpl implements IAlumnService {
         if(testAlumni.isPresent()){
             return "Alumni Already Exists";
         } else{
-                alumnRepository.save(new Alumn(alumn));
-                return "Alumni Successfully Saved";
+            LocalDate curDate = LocalDate.now();
+            alumn.setAge(Period.between(alumn.getBirthdate(), curDate).getYears());
+            alumnRepository.save(new Alumn(alumn));
+            return "Alumni Successfully Saved";
         }
     }
 

@@ -2,8 +2,10 @@ package com.example.SchoolRestApi.controllers;
 
 import com.example.SchoolRestApi.dto.AssignatureDTO;
 import com.example.SchoolRestApi.dto.TeacherDTO;
+import com.example.SchoolRestApi.repository.ITeacherRepository;
 import com.example.SchoolRestApi.repository.entity.Assignature;
 import com.example.SchoolRestApi.services.IAssignatureService;
+import com.example.SchoolRestApi.services.ITeacherService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +17,11 @@ public class AssignatureController {
 
 
     public final IAssignatureService iassignatureService;
+    public final ITeacherService iTeacherService;
 
-    public AssignatureController(IAssignatureService iassignatureService) {
+    public AssignatureController(IAssignatureService iassignatureService, ITeacherService iTeacherService) {
         this.iassignatureService = iassignatureService;
+        this.iTeacherService = iTeacherService;
     }
 
     @GetMapping()

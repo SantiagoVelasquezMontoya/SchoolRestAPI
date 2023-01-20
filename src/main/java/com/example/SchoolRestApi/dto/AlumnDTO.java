@@ -5,6 +5,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.criteria.CriteriaBuilder;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class AlumnDTO {
@@ -12,7 +13,7 @@ public class AlumnDTO {
     private Integer id;
     private String firstname;
     private String lastname;
-    private String birthdate;
+    private LocalDate birthdate;
     private Integer age;
 
     @ManyToOne
@@ -31,7 +32,7 @@ public class AlumnDTO {
     }
 
 
-    public AlumnDTO(Integer id, String firstname, String lastname, String birthdate, Integer age) {
+    public AlumnDTO(Integer id, String firstname, String lastname, LocalDate birthdate, Integer age) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -73,11 +74,11 @@ public class AlumnDTO {
         this.lastname = lastname;
     }
 
-    public String getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(String birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
