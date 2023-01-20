@@ -1,13 +1,15 @@
-package com.example.SchoolRestApi.repository.entity;
+package com.example.SchoolRestApi.dto;
 
-
-import com.example.SchoolRestApi.dto.AssignatureDTO;
-import jakarta.persistence.*;
+import com.example.SchoolRestApi.repository.entity.Alumn;
+import com.example.SchoolRestApi.repository.entity.Assignature;
+import com.example.SchoolRestApi.repository.entity.Teacher;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 import java.util.List;
 
-@Entity
-public class Assignature {
+public class AssignatureDTO {
 
     @Id
     private Integer id;
@@ -18,11 +20,10 @@ public class Assignature {
     @OneToMany
     private List<Alumn> alumns;
 
-
     @OneToOne
     private Teacher teacher;
 
-    public Assignature(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher) {
+    public AssignatureDTO(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher) {
         this.id = id;
         this.schedule = schedule;
         this.topic = topic;
@@ -30,15 +31,15 @@ public class Assignature {
         this.teacher = teacher;
     }
 
-    public Assignature(AssignatureDTO assignatureDTO) {
-        this.id = assignatureDTO.getId();
-        this.schedule = assignatureDTO.getSchedule();
-        this.topic = assignatureDTO.getTopic();
-        this.alumns = assignatureDTO.getAlumns();
-        this.teacher = assignatureDTO.getTeacher();
+    public AssignatureDTO(Assignature assignature) {
+        this.id = assignature.getId();
+        this.schedule = assignature.getSchedule();
+        this.topic = assignature.getTopic();
+        this.alumns = assignature.getAlumns();
+        this.teacher = assignature.getTeacher();
     }
 
-    public Assignature() {
+    public AssignatureDTO() {
     }
 
     public Integer getId() {
