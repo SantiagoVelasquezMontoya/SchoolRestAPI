@@ -2,6 +2,7 @@ package com.example.SchoolRestApi.repository.entity;
 
 
 import com.example.SchoolRestApi.dto.TeacherDTO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class Teacher {
     private Integer age;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     List<Assignature> assignature;
 
     public List<Assignature> getAssignature() {

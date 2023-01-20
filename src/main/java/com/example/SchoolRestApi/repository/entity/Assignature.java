@@ -2,6 +2,7 @@ package com.example.SchoolRestApi.repository.entity;
 
 
 import com.example.SchoolRestApi.dto.AssignatureDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class Assignature {
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
+    @JsonBackReference
     private Teacher teacher;
 
     public Assignature(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher) {
@@ -36,7 +38,7 @@ public class Assignature {
         this.schedule = assignatureDTO.getSchedule();
         this.topic = assignatureDTO.getTopic();
         this.alumns = assignatureDTO.getAlumns();
-        this.teacher = assignatureDTO.getTeacher();
+        this.teacher = new Teacher(assignatureDTO.getTeacher());
     }
 
     public Assignature() {

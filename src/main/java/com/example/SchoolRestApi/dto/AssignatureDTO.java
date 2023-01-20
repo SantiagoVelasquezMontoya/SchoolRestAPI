@@ -20,9 +20,9 @@ public class AssignatureDTO {
     private List<Alumn> alumns;
 
 
-    private Teacher teacher;
+    private TeacherDTO teacher;
 
-    public AssignatureDTO(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher) {
+    public AssignatureDTO(Integer id, String schedule, String topic, List<Alumn> alumns, TeacherDTO teacher) {
         this.id = id;
         this.schedule = schedule;
         this.topic = topic;
@@ -35,8 +35,8 @@ public class AssignatureDTO {
         this.schedule = assignature.getSchedule();
         this.topic = assignature.getTopic();
         this.alumns = assignature.getAlumns();
-        this.teacher = assignature.getTeacher();
-        //this.teacher = new TeacherDTO(assignature.getTeacher());
+        //this.teacher = assignature.getTeacher();
+        this.teacher = new TeacherDTO(assignature.getTeacher());
     }
 
     public AssignatureDTO() {
@@ -79,11 +79,11 @@ public class AssignatureDTO {
     }
 
 
-    public Teacher getTeacher() {
+    public TeacherDTO getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(TeacherDTO teacher) {
         this.teacher = teacher;
     }
 }
