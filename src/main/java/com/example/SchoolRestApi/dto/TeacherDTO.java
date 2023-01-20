@@ -1,6 +1,8 @@
 package com.example.SchoolRestApi.dto;
 
+import com.example.SchoolRestApi.repository.entity.Assignature;
 import com.example.SchoolRestApi.repository.entity.Teacher;
+import jakarta.persistence.OneToOne;
 
 public class TeacherDTO {
 
@@ -8,6 +10,17 @@ public class TeacherDTO {
     private String firstname;
     private String lastname;
     private Integer age;
+
+    @OneToOne
+    private AssignatureDTO assignatureDTO;
+
+    public AssignatureDTO getAssignatureDTO() {
+        return assignatureDTO;
+    }
+
+    public void setAssignatureDTO(AssignatureDTO assignatureDTO) {
+        this.assignatureDTO = assignatureDTO;
+    }
 
     public TeacherDTO(Integer id, String firstname, String lastname, Integer age) {
         this.id = id;

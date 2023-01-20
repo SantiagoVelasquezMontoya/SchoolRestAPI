@@ -2,8 +2,11 @@ package com.example.SchoolRestApi.repository.entity;
 
 
 import com.example.SchoolRestApi.dto.AlumnDTO;
+import com.example.SchoolRestApi.dto.AssignatureDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Alumn {
@@ -14,6 +17,19 @@ public class Alumn {
     private String lastname;
     private String birthdate;
     private Integer age;
+
+
+    @ManyToOne
+    @JoinColumn(name = "assignature_id")
+    private Assignature assignature;
+
+    public Assignature getAssignature() {
+        return assignature;
+    }
+
+    public void setAssignature(Assignature assignature) {
+        this.assignature = assignature;
+    }
 
 
     public Alumn(Integer id, String firstname, String lastname, String birthdate, Integer age) {

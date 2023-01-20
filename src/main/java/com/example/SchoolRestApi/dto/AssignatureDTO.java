@@ -20,6 +20,7 @@ public class AssignatureDTO {
     @OneToMany
     private List<Alumn> alumns;
 
+
     @OneToOne
     private Teacher teacher;
 
@@ -70,9 +71,14 @@ public class AssignatureDTO {
         return alumns;
     }
 
+    public void addAlumn(AlumnDTO alumnDTO){
+        this.alumns.add(new Alumn(alumnDTO));
+    }
+
     public void setAlumns(List<Alumn> alumns) {
         this.alumns = alumns;
     }
+
 
     public Teacher getTeacher() {
         return teacher;
