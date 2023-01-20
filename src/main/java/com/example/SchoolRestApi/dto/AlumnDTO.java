@@ -1,6 +1,7 @@
 package com.example.SchoolRestApi.dto;
 
 import com.example.SchoolRestApi.repository.entity.Alumn;
+import com.example.SchoolRestApi.repository.entity.Assignature;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -16,19 +17,16 @@ public class AlumnDTO {
     private LocalDate birthdate;
     private Integer age;
 
-    @ManyToOne
-    @JoinColumn(name = "assignature_id")
-    private AssignatureDTO assignatureDTO;
+    private Assignature assignature;
 
-    public AlumnDTO(AlumnDTO alumnDTO) {
+
+
+    public void setAssignature(Assignature assignature){
+        this.assignature = assignature;
     }
 
-    public void setAssignatureDTO(AssignatureDTO assignatureDTO){
-        this.assignatureDTO = assignatureDTO;
-    }
-
-    public AssignatureDTO getAssignatureDTO(){
-        return this.assignatureDTO;
+    public Assignature getAssignature(){
+        return this.assignature;
     }
 
 
@@ -39,6 +37,8 @@ public class AlumnDTO {
         this.birthdate = birthdate;
         this.age = age;
     }
+
+
 
     public AlumnDTO(Alumn alumn) {
         this.id = alumn.getId();

@@ -4,6 +4,8 @@ import com.example.SchoolRestApi.repository.entity.Assignature;
 import com.example.SchoolRestApi.repository.entity.Teacher;
 import jakarta.persistence.OneToOne;
 
+import java.util.List;
+
 public class TeacherDTO {
 
     private Integer id;
@@ -11,15 +13,15 @@ public class TeacherDTO {
     private String lastname;
     private Integer age;
 
-    @OneToOne
-    private Assignature assignature;
+    //private Assignature assignature;
+    List<Assignature> assignature;
 
-    public Assignature getAssignature() {
+    public List<Assignature> getAssignature() {
         return assignature;
     }
 
 
-    public void setAssignature(Assignature assignature) {
+    public void setAssignature(List<Assignature> assignature) {
         this.assignature = assignature;
     }
 
@@ -35,6 +37,7 @@ public class TeacherDTO {
         this.firstname = teacher.getFirstname();
         this.lastname = teacher.getLastname();
         this.age = teacher.getAge();
+        this.assignature = teacher.getAssignature();
     }
 
     public TeacherDTO() {

@@ -17,11 +17,9 @@ public class AssignatureDTO {
     private String schedule;
     private String topic;
 
-    @OneToMany
     private List<Alumn> alumns;
 
 
-    @OneToOne
     private Teacher teacher;
 
     public AssignatureDTO(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher) {
@@ -38,6 +36,7 @@ public class AssignatureDTO {
         this.topic = assignature.getTopic();
         this.alumns = assignature.getAlumns();
         this.teacher = assignature.getTeacher();
+        //this.teacher = new TeacherDTO(assignature.getTeacher());
     }
 
     public AssignatureDTO() {

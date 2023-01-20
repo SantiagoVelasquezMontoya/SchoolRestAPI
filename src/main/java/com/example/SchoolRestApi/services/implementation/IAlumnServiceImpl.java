@@ -16,9 +16,12 @@ import java.util.stream.Collectors;
 @Service
 public class IAlumnServiceImpl implements IAlumnService {
 
+    public final ToolService toolService;
+
     IAlumnRepository alumnRepository;
 
-    public IAlumnServiceImpl(IAlumnRepository alumnRepository) {
+    public IAlumnServiceImpl(ToolService toolService, IAlumnRepository alumnRepository) {
+        this.toolService = toolService;
         this.alumnRepository = alumnRepository;
     }
 
@@ -39,6 +42,7 @@ public class IAlumnServiceImpl implements IAlumnService {
     public String update(AlumnDTO alumn) {
         Optional<Alumn> targetAlumn = alumnRepository.findById(alumn.getId());
         if(targetAlumn.isPresent()){
+            alumn.setAge(toolService.getAgeFromBirthDate(alumn.getBirthdate()));
             alumnRepository.save(new Alumn(alumn));
             return "Alumni was successfully Updated";
         } else{

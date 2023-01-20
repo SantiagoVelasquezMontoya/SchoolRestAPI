@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IAssignatureRepository extends CrudRepository<Assignature, Integer> {
+    @Query("select a from Assignature a where a.teacher = ?1")
+    Optional<Assignature> findByTeacher(Teacher teacher);
 
 
 }

@@ -2,9 +2,10 @@ package com.example.SchoolRestApi.repository.entity;
 
 
 import com.example.SchoolRestApi.dto.TeacherDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Teacher {
@@ -15,14 +16,14 @@ public class Teacher {
     private String lastname;
     private Integer age;
 
-    @OneToOne
-    private  Assignature assignature;
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    List<Assignature> assignature;
 
-    public Assignature getAssignature() {
+    public List<Assignature> getAssignature() {
         return assignature;
     }
 
-    public void setAssignature(Assignature assignature) {
+    public void setAssignature(List<Assignature> assignature) {
         this.assignature = assignature;
     }
 
@@ -38,6 +39,15 @@ public class Teacher {
         this.firstname = teacherDTO.getFirstname();
         this.lastname = teacherDTO.getLastname();
         this.age = teacherDTO.getAge();
+        if(teacherDTO.getAssignature() != null){
+            //this.assignature = teacherDTO.getAssignature();
+            this.assignature = teacherDTO.getAssignature()
+                    .stream().map(Assignature::new)
+                    .collect(Collectors.toList());
+        } else{
+            this.assignature = teacherDTO.getAssignature();
+        }
+
     }
 
     public Teacher() {

@@ -52,8 +52,18 @@ public class AssignatureController {
         }
     }
 
+//    @GetMapping("/byTeacher")
+//    public ResponseEntity<?> getAssignatureByTeacher(@RequestBody TeacherDTO teacher){
+//        try{
+//            return ResponseEntity.ok().body(iassignatureService.findAssignatureByTeacher(teacher));
+//        } catch (Exception e){
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+
     record saveTeacherRequest (
             Integer teacherId,
             Integer assignatureId
     ){}
+
 }

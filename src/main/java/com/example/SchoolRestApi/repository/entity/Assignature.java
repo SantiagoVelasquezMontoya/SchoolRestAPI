@@ -19,7 +19,8 @@ public class Assignature {
     private List<Alumn> alumns;
 
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
     public Assignature(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher) {
