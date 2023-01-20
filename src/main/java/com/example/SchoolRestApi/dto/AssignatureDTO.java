@@ -37,6 +37,7 @@ public class AssignatureDTO {
         this.alumns = assignature.getAlumns();
         //this.teacher = assignature.getTeacher();
         this.teacher = new TeacherDTO(assignature.getTeacher());
+
     }
 
     public AssignatureDTO() {
