@@ -2,10 +2,12 @@ package com.example.SchoolRestApi.dto;
 
 import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.repository.entity.Assignature;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
@@ -20,7 +22,9 @@ public class AlumnDTO {
     @Pattern(regexp =  "[a-zA-Z]+" , message= "Only letters are valid")
     @NotBlank(message="Lastname is Required")
     private String lastname;
-    private LocalDate birthdate;
+    @Pattern(regexp = "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$" , message= "The only Valid date format is YYYY-MM-DD")
+    @NotBlank(message = "Date of Birth is Required")
+    private String birthdate;
     private Integer age;
 
     private Assignature assignature;
@@ -36,7 +40,7 @@ public class AlumnDTO {
     }
 
 
-    public AlumnDTO(Integer id, String firstname, String lastname, LocalDate birthdate, Integer age) {
+    public AlumnDTO(Integer id, String firstname, String lastname, String birthdate, Integer age) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -81,11 +85,11 @@ public class AlumnDTO {
         this.lastname = lastname;
     }
 
-    public LocalDate getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 

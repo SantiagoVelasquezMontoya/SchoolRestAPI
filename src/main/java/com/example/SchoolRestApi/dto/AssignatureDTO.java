@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,8 +17,13 @@ public class AssignatureDTO {
     @Id
     private Integer id;
 
+    @Pattern(regexp = "^(?=.{11,14}$)(([01][0-9]|2[0-3]):[0-5][0-9]-([01][0-9]|2[0-3]):[0-5][0-9])$",
+            message= "The only Valid Time Format is HH:MM-HH:MM")
     @NotBlank(message = "Schedule is required")
     private String schedule;
+
+    @Pattern(regexp = "^(?!.*true)[a-zA-Z0-9\\s]+$" , message= "Symbols or special characters are not allowed")
+    @Pattern(regexp = "^.{3,200}$",  message = "The topic must have between 3 and 200 characters")
     @NotBlank(message = "Topic is required")
     private String topic;
     private List<AlumnDTO> alumns;

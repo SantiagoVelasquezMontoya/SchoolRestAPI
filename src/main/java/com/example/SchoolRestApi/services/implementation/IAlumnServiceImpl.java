@@ -37,8 +37,7 @@ public class IAlumnServiceImpl implements IAlumnService {
 //            if(!toolService.isValidDate(alumn.getBirthdate())){
 //                return "no";
 //            }
-            LocalDate curDate = LocalDate.now();
-            alumn.setAge(Period.between(alumn.getBirthdate(), curDate).getYears());
+            alumn.setAge(toolService.getAgeFromBirthDate(alumn.getBirthdate()));
             alumnRepository.save(new Alumn(alumn));
             return "Alumni Successfully Saved";
         }

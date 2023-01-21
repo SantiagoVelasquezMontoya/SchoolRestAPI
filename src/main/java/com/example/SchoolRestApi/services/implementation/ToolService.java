@@ -9,10 +9,16 @@ import java.time.Period;
 
 @Service
 public class ToolService {
-    public int getAgeFromBirthDate(LocalDate birthdate){
+    public int getAgeFromBirthDate(String birthdate){
         LocalDate curDate = LocalDate.now();
-        return Period.between(birthdate, curDate).getYears();
+        return Period.between(LocalDate.parse(birthdate), curDate).getYears();
     };
+
+    public int calculateAge(String date){
+        LocalDate curDate = LocalDate.now();
+        LocalDate parsedDate = LocalDate.parse(date);
+        return (Period.between(parsedDate, curDate).getYears());
+    }
 
     public boolean isFullNameValid(String fullName){
         if(fullName.matches("[a-zA-Z]+")){

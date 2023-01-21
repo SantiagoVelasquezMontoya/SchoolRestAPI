@@ -84,6 +84,17 @@ public class AssignatureController {
         }
     }
 
+    @GetMapping("listStudents/{id}")
+    public ResponseEntity<?> getAllListedStudents(@PathVariable Integer id){
+        System.out.println(id);
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(iassignatureService.getAssignatureAlumns(id));
+        }
+        catch (Exception e){
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
 
 
 }

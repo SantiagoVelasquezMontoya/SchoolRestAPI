@@ -4,6 +4,7 @@ package com.example.SchoolRestApi.repository.entity;
 import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.dto.AssignatureDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -20,13 +21,14 @@ public class Alumn {
     private String firstname;
 
     private String lastname;
-    private LocalDate birthdate;
+    private String birthdate;
     private Integer age;
 
 
     @ManyToOne
     @JoinColumn(name = "assignature_id")
     @JsonBackReference
+    @JsonIgnore
     private Assignature assignature;
 
     public Assignature getAssignature() {
@@ -38,7 +40,7 @@ public class Alumn {
     }
 
 
-    public Alumn(Integer id, String firstname, String lastname, LocalDate birthdate, Integer age) {
+    public Alumn(Integer id, String firstname, String lastname, String birthdate, Integer age) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -82,11 +84,11 @@ public class Alumn {
         this.lastname = lastname;
     }
 
-    public LocalDate getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 

@@ -2,12 +2,11 @@ package com.example.SchoolRestApi.services.implementation;
 
 import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.dto.AssignatureDTO;
-import com.example.SchoolRestApi.dto.TeacherDTO;
+import com.example.SchoolRestApi.repository.IAlumnRepository;
 import com.example.SchoolRestApi.repository.IAssignatureRepository;
 import com.example.SchoolRestApi.repository.ITeacherRepository;
 import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.repository.entity.Assignature;
-import com.example.SchoolRestApi.repository.entity.Teacher;
 import com.example.SchoolRestApi.services.IAssignatureService;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +19,13 @@ public class IAssignatureServiceImpl implements IAssignatureService {
 
     public final IAssignatureRepository assignatureRepository;
     public final ITeacherRepository teacherRepository;
+    public final IAlumnRepository alumnRepository;
     public final ToolService toolService;
 
-    public IAssignatureServiceImpl(IAssignatureRepository assignatureRepository, ITeacherRepository teacherRepository, ToolService toolService) {
+    public IAssignatureServiceImpl(IAssignatureRepository assignatureRepository, ITeacherRepository teacherRepository, IAlumnRepository alumnRepository, ToolService toolService) {
         this.assignatureRepository = assignatureRepository;
         this.teacherRepository = teacherRepository;
+        this.alumnRepository = alumnRepository;
         this.toolService = toolService;
     }
 
@@ -85,8 +86,15 @@ public class IAssignatureServiceImpl implements IAssignatureService {
     }
 
     @Override
-    public List<AlumnDTO> getAlumns() {
-        return null;
+    public List<AlumnDTO> getAssignatureAlumns(int assignatureId) {
+//        List<Alumn> alumns = (List<Alumn>) alumnRepository.findAll();
+//        return alumns.stream().filter((alumn) ->{
+//            if(alumn.getAssignature() == null) return false;
+//            return alumn.getAssignature().getId() == assignatureId;
+//        }).map(AlumnDTO::new).collect(Collectors.toList());
+
+        List<Alumn> alumnss = (List<Alumn>) alumnRepository.findAlumnByAssignatureId(assignatureId);
+        return alumnss.stream().map(AlumnDTO::new).collect(Collectors.toList());
     }
 
     @Override
