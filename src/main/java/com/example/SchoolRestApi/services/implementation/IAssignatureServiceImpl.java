@@ -42,7 +42,8 @@ public class IAssignatureServiceImpl implements IAssignatureService {
     public String deleteAssignature(AssignatureDTO assignature) {
         Optional<Assignature> targetAssignature =  assignatureRepository.findById(assignature.getId());
             if(targetAssignature.isPresent()){
-                assignatureRepository.deleteById(assignature.getId());
+               // assignatureRepository.deleteById(assignature.getId());
+                assignatureRepository.deleteById(1);
                 return "Assignature succesfully deleted";
             }
             else{
@@ -72,41 +73,6 @@ public class IAssignatureServiceImpl implements IAssignatureService {
     }
 
     @Override
-    public String saveTeacher(Integer teacherId, Integer assignatureId) {
-        Optional<Assignature> targetAssignature = assignatureRepository.findById(assignatureId);
-        Optional<Teacher> targetTeacher = teacherRepository.findById(teacherId);
-
-        if(targetTeacher.isPresent() && targetAssignature.isPresent()){
-            Assignature updatedAssignature = new Assignature(new AssignatureDTO(targetAssignature.get()));
-            Teacher updatedTeacher = new Teacher(new TeacherDTO(targetTeacher.get()));
-            updatedAssignature.setTeacher(targetTeacher.get());
-            //updatedTeacher.setAssignature(targetAssignature.get());
-            //targetTeacher.get().setAssignature(updatedAssignature);
-            //teacherRepository.save(targetTeacher.get());
-            //teacherRepository.save(updatedTeacher);
-            assignatureRepository.save(updatedAssignature);
-
-            return "The assignature " +
-                    updatedAssignature.getTopic() +
-                    " Was assigned to Teacher " +
-                    updatedAssignature.getTeacher().getFirstname();
-        } else{
-            return "Either the Teacher or the Assignature weren't found.";
-        }
-    }
-
-    @Override
-    public TeacherDTO getTeacher(AssignatureDTO assignature) {
-        Teacher targetTeacher = assignatureRepository.findById(assignature.getId()).get().getTeacher();
-        return new TeacherDTO(targetTeacher);
-    }
-
-    @Override
-    public String deleteTeacher(TeacherDTO teacher) {
-        return null;
-    }
-
-    @Override
     public String saveUser(AlumnDTO alumn) {
         return null;
     }
@@ -115,8 +81,6 @@ public class IAssignatureServiceImpl implements IAssignatureService {
     public List<AlumnDTO> getAlumns() {
         return null;
     }
-
-
 
     @Override
     public String deleteAlumn(AlumnDTO alumn) {
