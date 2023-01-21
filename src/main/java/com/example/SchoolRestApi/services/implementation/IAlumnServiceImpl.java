@@ -34,6 +34,9 @@ public class IAlumnServiceImpl implements IAlumnService {
             if(!toolService.isFullNameValid(alumn.getFirstname() + alumn.getLastname())){
                 return "Please enter a Valid Firstname and Lastname";
             }
+//            if(!toolService.isValidDate(alumn.getBirthdate())){
+//                return "no";
+//            }
             LocalDate curDate = LocalDate.now();
             alumn.setAge(Period.between(alumn.getBirthdate(), curDate).getYears());
             alumnRepository.save(new Alumn(alumn));

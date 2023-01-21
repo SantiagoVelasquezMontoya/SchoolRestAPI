@@ -3,14 +3,21 @@ package com.example.SchoolRestApi.dto;
 import com.example.SchoolRestApi.repository.entity.Assignature;
 import com.example.SchoolRestApi.repository.entity.Teacher;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 
 public class TeacherDTO {
 
     private Integer id;
+    @NotBlank(message = "Firstname is required")
+    @Pattern(regexp =  "[a-zA-Z]+" , message= "Only letters are valid")
     private String firstname;
+    @NotBlank(message = "Lastname is required")
+    @Pattern(regexp =  "[a-zA-Z]+" , message= "Only letters are valid")
     private String lastname;
+
     private Integer age;
 
     //private Assignature assignature;

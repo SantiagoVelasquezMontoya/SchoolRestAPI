@@ -5,6 +5,8 @@ import com.example.SchoolRestApi.repository.entity.Assignature;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -12,7 +14,11 @@ import java.util.Date;
 public class AlumnDTO {
 
     private Integer id;
+    @NotBlank(message="Firstname is Required")
+    @Pattern(regexp =  "[a-zA-Z]+" , message= "Only letters are valid")
     private String firstname;
+    @Pattern(regexp =  "[a-zA-Z]+" , message= "Only letters are valid")
+    @NotBlank(message="Lastname is Required")
     private String lastname;
     private LocalDate birthdate;
     private Integer age;

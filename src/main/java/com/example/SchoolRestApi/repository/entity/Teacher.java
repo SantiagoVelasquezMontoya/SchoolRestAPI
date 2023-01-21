@@ -4,6 +4,7 @@ package com.example.SchoolRestApi.repository.entity;
 import com.example.SchoolRestApi.dto.TeacherDTO;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ public class Teacher {
 
     @Id
     private Integer id;
+
     private String firstname;
     private String lastname;
     private Integer age;

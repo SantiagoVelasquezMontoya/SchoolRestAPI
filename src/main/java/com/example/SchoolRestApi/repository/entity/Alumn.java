@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 
@@ -17,6 +18,7 @@ public class Alumn {
     @Id
     private Integer id;
     private String firstname;
+
     private String lastname;
     private LocalDate birthdate;
     private Integer age;

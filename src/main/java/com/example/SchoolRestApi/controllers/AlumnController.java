@@ -3,25 +3,45 @@ package com.example.SchoolRestApi.controllers;
 
 import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.services.IAlumnService;
+import com.example.SchoolRestApi.services.implementation.ValidationHandler;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.rmi.server.ExportException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/alumni")
+@Validated
 public class AlumnController {
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex){
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) ->{
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
 
-    @Autowired
     public final IAlumnService iAlumnService;
 
     public AlumnController(IAlumnService iAlumnService) {
         this.iAlumnService = iAlumnService;
     }
+
+
 
     @GetMapping()
     public ResponseEntity<List<AlumnDTO>> getAll(){
@@ -33,14 +53,16 @@ public class AlumnController {
         }
     }
 
+
     @PostMapping()
-    public ResponseEntity<String> saveAlumni(@RequestBody AlumnDTO alumn){
+    public ResponseEntity<?> saveAlumni(@Valid @RequestBody AlumnDTO alumn){
         try{
-            return ResponseEntity.ok().body(iAlumnService.save(alumn));
+            return ResponseEntity.status(HttpStatus.CREATED).body(iAlumnService.save(alumn));
         } catch (Exception e){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
 
     @DeleteMapping()
     public ResponseEntity<String> deleteAlumn(@RequestBody AlumnDTO alumn){
@@ -71,4 +93,6 @@ public class AlumnController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+
 }

@@ -6,6 +6,7 @@ import com.example.SchoolRestApi.repository.entity.Teacher;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,12 +16,11 @@ public class AssignatureDTO {
     @Id
     private Integer id;
 
+    @NotBlank(message = "Schedule is required")
     private String schedule;
+    @NotBlank(message = "Topic is required")
     private String topic;
-
     private List<AlumnDTO> alumns;
-
-
     private TeacherDTO teacher;
 
     public AssignatureDTO(Integer id, String schedule, String topic, List<AlumnDTO> alumns, TeacherDTO teacher) {

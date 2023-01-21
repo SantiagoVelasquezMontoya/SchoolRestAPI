@@ -5,14 +5,34 @@ import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.dto.TeacherDTO;
 import com.example.SchoolRestApi.services.ITeacherService;
 import com.example.SchoolRestApi.services.implementation.ITeacherServiceImpl;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/teacher")
+@Validated
 public class TeacherController {
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex){
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) ->{
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
 
     public final ITeacherService iTeacherService;
 
@@ -33,7 +53,7 @@ public class TeacherController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> saveAlumni(@RequestBody TeacherDTO teacher){
+    public ResponseEntity<String> saveTeacher(@Valid @RequestBody TeacherDTO teacher){
         try{
             return ResponseEntity.ok().body(iTeacherService.save(teacher));
         } catch (Exception e){
@@ -42,7 +62,7 @@ public class TeacherController {
     }
 
     @DeleteMapping()
-    public ResponseEntity<String> deleteAlumn(@RequestBody TeacherDTO teacher){
+    public ResponseEntity<String> deleteTeacher(@RequestBody TeacherDTO teacher){
         try{
             return ResponseEntity.ok(iTeacherService.delete(teacher));
         }
@@ -52,7 +72,7 @@ public class TeacherController {
     }
 
     @PutMapping()
-    public ResponseEntity<String> updateAlumn(@RequestBody TeacherDTO teacher){
+    public ResponseEntity<String> updateTeacher(@RequestBody TeacherDTO teacher){
         try{
             return ResponseEntity.ok().body(iTeacherService.update(teacher));
         }
