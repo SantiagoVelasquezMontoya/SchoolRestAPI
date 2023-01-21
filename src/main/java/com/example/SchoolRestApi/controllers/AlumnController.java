@@ -4,6 +4,7 @@ package com.example.SchoolRestApi.controllers;
 import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.services.IAlumnService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,5 +60,15 @@ public class AlumnController {
          catch (Exception e){
             return ResponseEntity.notFound().build();
          }
+    }
+
+    @PutMapping("/enroll")
+    public ResponseEntity<String> enrollALumn(@RequestBody AlumnDTO alumn){
+        try{
+            return ResponseEntity.ok().body(iAlumnService.enroll(alumn));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }

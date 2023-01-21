@@ -11,5 +11,6 @@ public interface IAlumnService {
     String update(AlumnDTO alumn);
     String delete(AlumnDTO alumn);
     List<AlumnDTO> getAll();
+    String enroll(AlumnDTO alumn);
 
 }

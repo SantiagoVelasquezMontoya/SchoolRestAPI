@@ -69,4 +69,14 @@ public class IAlumnServiceImpl implements IAlumnService {
                 .map(AlumnDTO::new)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public String enroll(AlumnDTO alumn) {
+        Optional<Alumn> targetAlumn = alumnRepository.findById(alumn.getId());
+        if(targetAlumn.isPresent()){
+            targetAlumn.get().setAssignature(alumn.getAssignature());
+            alumnRepository.save(targetAlumn.get());
+        }
+        return null;
+    }
 }
