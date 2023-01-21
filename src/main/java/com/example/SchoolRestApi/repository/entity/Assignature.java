@@ -3,9 +3,11 @@ package com.example.SchoolRestApi.repository.entity;
 
 import com.example.SchoolRestApi.dto.AssignatureDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Assignature {
@@ -16,7 +18,8 @@ public class Assignature {
     private String schedule;
     private String topic;
 
-    @OneToMany
+    @OneToMany(mappedBy = "assignature", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Alumn> alumns;
 
 
@@ -37,7 +40,10 @@ public class Assignature {
         this.id = assignatureDTO.getId();
         this.schedule = assignatureDTO.getSchedule();
         this.topic = assignatureDTO.getTopic();
-        this.alumns = assignatureDTO.getAlumns();
+        //this.alumns = assignatureDTO.getAlumns();
+        if(assignatureDTO.getAlumns() != null){
+            this.alumns = assignatureDTO.getAlumns().stream().map(Alumn::new).collect(Collectors.toList());
+        }
         this.teacher = new Teacher(assignatureDTO.getTeacher());
     }
 

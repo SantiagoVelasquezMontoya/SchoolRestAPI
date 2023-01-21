@@ -41,7 +41,7 @@ public class AssignatureController {
             return ResponseEntity.status(HttpStatus.CREATED).body(iassignatureService.saveAssignature(assignature));
         }
         catch(Exception e){
-            return  ResponseEntity.badRequest().build();
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

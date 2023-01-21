@@ -42,8 +42,7 @@ public class IAssignatureServiceImpl implements IAssignatureService {
     public String deleteAssignature(AssignatureDTO assignature) {
         Optional<Assignature> targetAssignature =  assignatureRepository.findById(assignature.getId());
             if(targetAssignature.isPresent()){
-               // assignatureRepository.deleteById(assignature.getId());
-                assignatureRepository.deleteById(1);
+                assignatureRepository.deleteById(assignature.getId());
                 return "Assignature succesfully deleted";
             }
             else{

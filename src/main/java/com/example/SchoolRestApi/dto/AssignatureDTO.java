@@ -8,6 +8,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AssignatureDTO {
 
@@ -17,12 +18,12 @@ public class AssignatureDTO {
     private String schedule;
     private String topic;
 
-    private List<Alumn> alumns;
+    private List<AlumnDTO> alumns;
 
 
     private TeacherDTO teacher;
 
-    public AssignatureDTO(Integer id, String schedule, String topic, List<Alumn> alumns, TeacherDTO teacher) {
+    public AssignatureDTO(Integer id, String schedule, String topic, List<AlumnDTO> alumns, TeacherDTO teacher) {
         this.id = id;
         this.schedule = schedule;
         this.topic = topic;
@@ -34,7 +35,9 @@ public class AssignatureDTO {
         this.id = assignature.getId();
         this.schedule = assignature.getSchedule();
         this.topic = assignature.getTopic();
-        this.alumns = assignature.getAlumns();
+        if(assignature.getAlumns() != null){
+            this.alumns = assignature.getAlumns().stream().map(AlumnDTO::new).collect(Collectors.toList());
+        }
         //this.teacher = assignature.getTeacher();
         this.teacher = new TeacherDTO(assignature.getTeacher());
 
@@ -67,15 +70,15 @@ public class AssignatureDTO {
         this.topic = topic;
     }
 
-    public List<Alumn> getAlumns() {
+    public List<AlumnDTO> getAlumns() {
         return alumns;
     }
 
     public void addAlumn(AlumnDTO alumnDTO){
-        this.alumns.add(new Alumn(alumnDTO));
+        this.alumns.add(alumnDTO);
     }
 
-    public void setAlumns(List<Alumn> alumns) {
+    public void setAlumns(List<AlumnDTO> alumns) {
         this.alumns = alumns;
     }
 

@@ -3,6 +3,7 @@ package com.example.SchoolRestApi.repository.entity;
 
 import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.dto.AssignatureDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -23,6 +24,7 @@ public class Alumn {
 
     @ManyToOne
     @JoinColumn(name = "assignature_id")
+    @JsonBackReference
     private Assignature assignature;
 
     public Assignature getAssignature() {
@@ -48,6 +50,7 @@ public class Alumn {
         this.lastname = alumnDTO.getLastname();
         this.birthdate = alumnDTO.getBirthdate();
         this.age = alumnDTO.getAge();
+        this.assignature = alumnDTO.getAssignature();
     }
 
     public Alumn() {

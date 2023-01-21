@@ -46,6 +46,7 @@ public class AlumnDTO {
         this.lastname = alumn.getLastname();
         this.birthdate = alumn.getBirthdate();
         this.age = alumn.getAge();
+        this.assignature = alumn.getAssignature();
     }
     public AlumnDTO() {
     }
