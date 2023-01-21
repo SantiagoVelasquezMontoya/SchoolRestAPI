@@ -15,9 +15,12 @@ public class ITeacherServiceImpl implements ITeacherService {
 
 
     public final ITeacherRepository teacherRepository;
+    public final ToolService toolService;
 
-    public ITeacherServiceImpl(ITeacherRepository teacherRepository) {
+
+    public ITeacherServiceImpl(ITeacherRepository teacherRepository, ToolService toolService) {
         this.teacherRepository = teacherRepository;
+        this.toolService = toolService;
     }
 
     @Override
@@ -26,6 +29,9 @@ public class ITeacherServiceImpl implements ITeacherService {
         if(testTeacher.isPresent()){
             return "Teacher Already Exists";
         } else{
+            if(!toolService.isFullNameValid(teacher.getFirstname() + teacher.getLastname())){
+                return "Please enter a Valid Firstname and Lastname";
+            }
             teacherRepository.save(new Teacher(teacher));
             return "Teacher Successfully Saved";
         }
@@ -35,6 +41,9 @@ public class ITeacherServiceImpl implements ITeacherService {
     public String update(TeacherDTO teacher) {
         Optional<Teacher> targetTeacher = teacherRepository.findById(teacher.getId());
         if(targetTeacher.isPresent()){
+            if(!toolService.isFullNameValid(teacher.getFirstname() + teacher.getLastname())){
+                return "Please enter a Valid Firstname and Lastname";
+            }
             teacherRepository.save(new Teacher(teacher));
             return "Teacher was successfully Updated";
         } else{

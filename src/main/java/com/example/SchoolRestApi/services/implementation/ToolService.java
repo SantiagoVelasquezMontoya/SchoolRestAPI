@@ -13,4 +13,16 @@ public class ToolService {
         LocalDate curDate = LocalDate.now();
         return Period.between(birthdate, curDate).getYears();
     };
+
+    public boolean isFullNameValid(String fullName){
+        if(fullName.matches("[a-zA-Z]+")){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    public boolean isAssignatureTopicValid(String topic){
+       return topic.matches("^[aA-zZ0-9 ]{3,200}") ? true  : false;
+    }
 }

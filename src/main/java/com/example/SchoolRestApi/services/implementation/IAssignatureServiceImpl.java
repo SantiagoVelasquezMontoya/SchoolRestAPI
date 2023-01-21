@@ -20,10 +20,12 @@ public class IAssignatureServiceImpl implements IAssignatureService {
 
     public final IAssignatureRepository assignatureRepository;
     public final ITeacherRepository teacherRepository;
+    public final ToolService toolService;
 
-    public IAssignatureServiceImpl(IAssignatureRepository assignatureRepository, ITeacherRepository teacherRepository) {
+    public IAssignatureServiceImpl(IAssignatureRepository assignatureRepository, ITeacherRepository teacherRepository, ToolService toolService) {
         this.assignatureRepository = assignatureRepository;
         this.teacherRepository = teacherRepository;
+        this.toolService = toolService;
     }
 
     @Override
@@ -33,6 +35,9 @@ public class IAssignatureServiceImpl implements IAssignatureService {
         if(targetAssignature.isPresent()){
             return "Assignature already Exists";
         } else {
+            if(!toolService.isAssignatureTopicValid(assignature.getTopic())) {
+                return "Assignature Topic can only have Letters and Numbers with a maximum length of 200 characters";
+            }
             assignatureRepository.save(new Assignature(assignature));
             return "Assignature was Succesfully saved";
         }
@@ -54,6 +59,9 @@ public class IAssignatureServiceImpl implements IAssignatureService {
     public String updateAssignature(AssignatureDTO assignature) {
         Optional<Assignature> targetAssignature =  assignatureRepository.findById(assignature.getId());
         if(targetAssignature.isPresent()){
+            if(!toolService.isAssignatureTopicValid(assignature.getTopic())) {
+                return "Assignature Topic can only have Letters and Numbers with a maximum length of 200 characters";
+            }
             assignatureRepository.save(new Assignature(assignature));
             return "Assignature succesfully updated";
         }

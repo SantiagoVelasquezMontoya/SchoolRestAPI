@@ -31,6 +31,9 @@ public class IAlumnServiceImpl implements IAlumnService {
         if(testAlumni.isPresent()){
             return "Alumni Already Exists";
         } else{
+            if(!toolService.isFullNameValid(alumn.getFirstname() + alumn.getLastname())){
+                return "Please enter a Valid Firstname and Lastname";
+            }
             LocalDate curDate = LocalDate.now();
             alumn.setAge(Period.between(alumn.getBirthdate(), curDate).getYears());
             alumnRepository.save(new Alumn(alumn));
@@ -42,6 +45,9 @@ public class IAlumnServiceImpl implements IAlumnService {
     public String update(AlumnDTO alumn) {
         Optional<Alumn> targetAlumn = alumnRepository.findById(alumn.getId());
         if(targetAlumn.isPresent()){
+            if(!toolService.isFullNameValid(alumn.getFirstname() + alumn.getLastname())){
+                return "Please enter a Valid Firstname and Lastname";
+            }
             alumn.setAge(toolService.getAgeFromBirthDate(alumn.getBirthdate()));
             alumnRepository.save(new Alumn(alumn));
             return "Alumni was successfully Updated";
