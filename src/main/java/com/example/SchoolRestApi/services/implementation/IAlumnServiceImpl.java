@@ -4,6 +4,7 @@ import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.repository.IAlumnRepository;
 import com.example.SchoolRestApi.repository.IAssignatureRepository;
 import com.example.SchoolRestApi.repository.entity.Alumn;
+import com.example.SchoolRestApi.repository.entity.Assignature;
 import com.example.SchoolRestApi.services.IAlumnService;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +38,6 @@ public class IAlumnServiceImpl implements IAlumnService {
             if(!toolService.isFullNameValid(alumn.getFirstname() + alumn.getLastname())){
                 return "Please enter a Valid Firstname and Lastname";
             }
-//            if(!toolService.isValidDate(alumn.getBirthdate())){
-//                return "no";
-//            }
             alumn.setAge(toolService.getAgeFromBirthDate(alumn.getBirthdate()));
             alumnRepository.save(new Alumn(alumn));
             return "Alumni Successfully Saved";
@@ -86,7 +84,7 @@ public class IAlumnServiceImpl implements IAlumnService {
         Optional<Alumn> targetAlumn = alumnRepository.findById(alumn.getId());
 
         if(targetAlumn.isPresent()){
-            targetAlumn.get().setAssignature(alumn.getAssignature());
+            targetAlumn.get().setAssignature(new Assignature(alumn.getAssignature()));
             alumnRepository.save(targetAlumn.get());
         }
         return "Alumn was successfully enrolled";

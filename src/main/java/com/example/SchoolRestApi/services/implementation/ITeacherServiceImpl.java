@@ -4,6 +4,7 @@ import com.example.SchoolRestApi.dto.TeacherDTO;
 import com.example.SchoolRestApi.repository.ITeacherRepository;
 import com.example.SchoolRestApi.repository.entity.Teacher;
 import com.example.SchoolRestApi.services.ITeacherService;
+import com.example.SchoolRestApi.services.utilities.TeacherMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +18,13 @@ public class ITeacherServiceImpl implements ITeacherService {
     public final ITeacherRepository teacherRepository;
     public final ToolService toolService;
 
+    public final TeacherMapper teacherMapper;
 
-    public ITeacherServiceImpl(ITeacherRepository teacherRepository, ToolService toolService) {
+
+    public ITeacherServiceImpl(ITeacherRepository teacherRepository, ToolService toolService, TeacherMapper teacherMapper) {
         this.teacherRepository = teacherRepository;
         this.toolService = toolService;
+        this.teacherMapper = teacherMapper;
     }
 
     @Override
@@ -66,10 +70,19 @@ public class ITeacherServiceImpl implements ITeacherService {
     @Override
     public List<TeacherDTO> getAll() {
         List<Teacher> teacherList = (List<Teacher>)teacherRepository.findAll();
+//        return teacherList
+//                .stream()
+//                .map(TeacherDTO::new)
+//                .collect(Collectors.toList());
         return teacherList
                 .stream()
                 .map(TeacherDTO::new)
                 .collect(Collectors.toList());
+    }
 
+    @Override
+    public TeacherDTO getTeacher(int teacherId) {
+        Optional<Teacher> foundTeacher = teacherRepository.findById(teacherId);
+        return new TeacherDTO(foundTeacher.get());
     }
 }

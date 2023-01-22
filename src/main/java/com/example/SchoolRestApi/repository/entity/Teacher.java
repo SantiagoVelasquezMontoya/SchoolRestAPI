@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class Teacher {
     private Integer age;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonBackReference
     @JsonIgnoreProperties("assignature")
     @JsonIgnore
     List<Assignature> assignature;
@@ -34,11 +35,12 @@ public class Teacher {
         this.assignature = assignature;
     }
 
-    public Teacher(Integer id, String firstname, String lastname, Integer age) {
+    public Teacher(Integer id, String firstname, String lastname, Integer age, List<Assignature> assignature) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
+        this.assignature = assignature;
     }
 
     public Teacher(TeacherDTO teacherDTO) {
@@ -47,14 +49,12 @@ public class Teacher {
         this.lastname = teacherDTO.getLastname();
         this.age = teacherDTO.getAge();
         if(teacherDTO.getAssignature() != null){
-            //this.assignature = teacherDTO.getAssignature();
             this.assignature = teacherDTO.getAssignature()
                     .stream().map(Assignature::new)
                     .collect(Collectors.toList());
         } else{
-            this.assignature = teacherDTO.getAssignature();
+            this.assignature = new ArrayList<>();
         }
-
     }
 
     public Teacher() {

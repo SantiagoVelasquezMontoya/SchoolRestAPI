@@ -5,6 +5,7 @@ import com.example.SchoolRestApi.dto.AssignatureDTO;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class Assignature {
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
-    @JsonBackReference
+    @JsonManagedReference
     @JsonIgnore
     private Teacher teacher;
 
@@ -49,10 +50,18 @@ public class Assignature {
         this.topic = assignatureDTO.getTopic();
         if(assignatureDTO.getAlumns() != null){
             this.alumns = assignatureDTO.getAlumns().stream().map(Alumn::new).collect(Collectors.toList());
+        } else{
+            this.alumns = new ArrayList<>();
         }
-        this.teacher = new Teacher(assignatureDTO.getTeacher());
+        if(assignatureDTO.getTeacher() != null){
+            this.teacher = new Teacher(assignatureDTO.getTeacher());
+        } else{
+            this.teacher = new Teacher();
+        }
         if(assignatureDTO.getGrades() != null){
             this.grades = assignatureDTO.getGrades().stream().map(Grades::new).collect(Collectors.toList());
+        } else{
+            this.grades = new ArrayList<>();
         }
     }
 

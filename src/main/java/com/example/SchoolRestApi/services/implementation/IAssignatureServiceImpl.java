@@ -9,12 +9,10 @@ import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.repository.entity.Assignature;
 import com.example.SchoolRestApi.repository.entity.Teacher;
 import com.example.SchoolRestApi.services.IAssignatureService;
+import com.example.SchoolRestApi.services.utilities.AssignatureMapper;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,12 +24,14 @@ public class IAssignatureServiceImpl implements IAssignatureService {
     public final ITeacherRepository teacherRepository;
     public final IAlumnRepository alumnRepository;
     public final ToolService toolService;
+    public final AssignatureMapper assignatureMapper;
 
-    public IAssignatureServiceImpl(IAssignatureRepository assignatureRepository, ITeacherRepository teacherRepository, IAlumnRepository alumnRepository, ToolService toolService) {
+    public IAssignatureServiceImpl(IAssignatureRepository assignatureRepository, ITeacherRepository teacherRepository, IAlumnRepository alumnRepository, ToolService toolService, AssignatureMapper assignatureMapper) {
         this.assignatureRepository = assignatureRepository;
         this.teacherRepository = teacherRepository;
         this.alumnRepository = alumnRepository;
         this.toolService = toolService;
+        this.assignatureMapper = assignatureMapper;
     }
 
     @Override

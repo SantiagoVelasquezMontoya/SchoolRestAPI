@@ -81,4 +81,13 @@ public class TeacherController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getTeacher(@PathVariable Integer id){
+        try{
+            return ResponseEntity.ok().body(iTeacherService.getTeacher(id));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
 }

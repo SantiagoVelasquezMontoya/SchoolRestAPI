@@ -9,6 +9,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,10 +47,18 @@ public class AssignatureDTO {
         this.topic = assignature.getTopic();
         if(assignature.getAlumns() != null){
             this.alumns = assignature.getAlumns().stream().map(AlumnDTO::new).collect(Collectors.toList());
+        } else{
+            this.alumns = new ArrayList<>();
         }
-        this.teacher = new TeacherDTO(assignature.getTeacher());
+        if(assignature.getTeacher() != null){
+            this.teacher = new TeacherDTO(assignature.getTeacher());
+        } else{
+            this.teacher = new TeacherDTO();
+        }
         if(assignature.getGrades() != null){
             this.grades = assignature.getGrades().stream().map(GradesDTO::new).collect(Collectors.toList());
+        } else{
+            this.grades = new ArrayList<>();
         }
     }
 

@@ -24,13 +24,13 @@ public class Grades {
     //ManytoOne con Asignatura
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="alumn_id",referencedColumnName = "id")
+    @JoinColumn(name="alumn_id",referencedColumnName = "id", insertable = false, updatable = false)
     @JsonBackReference
     @JsonIgnore
     private Alumn alumn;
 
     @ManyToOne
-    @JoinColumn(name = "assignature_id")
+    @JoinColumn(name = "assignature_id", insertable = false, updatable = false)
     @JsonBackReference
     @JsonIgnore
     private Assignature assignature;

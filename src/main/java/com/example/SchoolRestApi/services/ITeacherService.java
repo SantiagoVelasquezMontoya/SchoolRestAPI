@@ -11,4 +11,6 @@ public interface ITeacherService {
     String update(TeacherDTO teacher);
     String delete(TeacherDTO teacher);
     List<TeacherDTO> getAll();
+
+    TeacherDTO getTeacher(int teacherId);
 }

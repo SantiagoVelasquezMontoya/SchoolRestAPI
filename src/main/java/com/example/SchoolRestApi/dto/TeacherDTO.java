@@ -6,7 +6,9 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TeacherDTO {
 
@@ -21,22 +23,23 @@ public class TeacherDTO {
     private Integer age;
 
     //private Assignature assignature;
-    List<Assignature> assignature;
+    List<AssignatureDTO> assignature;
 
-    public List<Assignature> getAssignature() {
+    public List<AssignatureDTO> getAssignature() {
         return assignature;
     }
 
 
-    public void setAssignature(List<Assignature> assignature) {
+    public void setAssignature(List<AssignatureDTO> assignature) {
         this.assignature = assignature;
     }
 
-    public TeacherDTO(Integer id, String firstname, String lastname, Integer age) {
+    public TeacherDTO(Integer id, String firstname, String lastname, Integer age, List<AssignatureDTO> assignature) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
+        this.assignature = assignature;
     }
 
     public TeacherDTO(Teacher teacher) {
@@ -44,7 +47,11 @@ public class TeacherDTO {
         this.firstname = teacher.getFirstname();
         this.lastname = teacher.getLastname();
         this.age = teacher.getAge();
-        this.assignature = teacher.getAssignature();
+        if(teacher.getAssignature() != null){
+            this.assignature = teacher.getAssignature().stream().map(AssignatureDTO::new).collect(Collectors.toList());
+        } else{
+            this.assignature= new ArrayList<>();
+        }
     }
 
     public TeacherDTO() {
