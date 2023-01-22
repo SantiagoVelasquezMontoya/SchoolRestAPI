@@ -29,23 +29,27 @@ public class Assignature {
     @JsonIgnore
     private Teacher teacher;
 
-    public Assignature(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher) {
+    @OneToOne
+    private Grades grades;
+
+    public Assignature(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher, Grades grades) {
         this.id = id;
         this.schedule = schedule;
         this.topic = topic;
         this.alumns = alumns;
         this.teacher = teacher;
+        this.grades = grades;
     }
 
     public Assignature(AssignatureDTO assignatureDTO) {
         this.id = assignatureDTO.getId();
         this.schedule = assignatureDTO.getSchedule();
         this.topic = assignatureDTO.getTopic();
-        //this.alumns = assignatureDTO.getAlumns();
         if(assignatureDTO.getAlumns() != null){
             this.alumns = assignatureDTO.getAlumns().stream().map(Alumn::new).collect(Collectors.toList());
         }
         this.teacher = new Teacher(assignatureDTO.getTeacher());
+        this.grades = new Grades(assignatureDTO.getGrades());
     }
 
     public Assignature() {
@@ -93,5 +97,13 @@ public class Assignature {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public Grades getGrades() {
+        return grades;
+    }
+
+    public void setGrades(Grades grades) {
+        this.grades = grades;
     }
 }

@@ -4,8 +4,11 @@ package com.example.SchoolRestApi.services.implementation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Date;
 
 @Service
 public class ToolService {
@@ -14,12 +17,6 @@ public class ToolService {
         return Period.between(LocalDate.parse(birthdate), curDate).getYears();
     };
 
-    public int calculateAge(String date){
-        LocalDate curDate = LocalDate.now();
-        LocalDate parsedDate = LocalDate.parse(date);
-        return (Period.between(parsedDate, curDate).getYears());
-    }
-
     public boolean isFullNameValid(String fullName){
         if(fullName.matches("[a-zA-Z]+")){
             return true;
@@ -27,13 +24,19 @@ public class ToolService {
             return false;
         }
     }
-
     public boolean isAssignatureTopicValid(String topic){
        return topic.matches("^[aA-zZ0-9 ]{3,200}") ? true  : false;
     }
 
-    public boolean isValidDate(LocalDate date){
-        //^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$
-        return date.toString().matches("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$");
+    public String changeDateFormat(String inputDate) throws ParseException {
+        SimpleDateFormat originalDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date alumniDate = originalDateFormat.parse(inputDate);
+        String wantedDateFormat = outputDateFormat.format(alumniDate);
+
+        return wantedDateFormat;
+
     }
+
 }

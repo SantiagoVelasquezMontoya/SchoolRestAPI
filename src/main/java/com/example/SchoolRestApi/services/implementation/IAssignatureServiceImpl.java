@@ -10,6 +10,10 @@ import com.example.SchoolRestApi.repository.entity.Assignature;
 import com.example.SchoolRestApi.services.IAssignatureService;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -80,25 +84,18 @@ public class IAssignatureServiceImpl implements IAssignatureService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public String saveUser(AlumnDTO alumn) {
-        return null;
-    }
 
     @Override
     public List<AlumnDTO> getAssignatureAlumns(int assignatureId) {
-//        List<Alumn> alumns = (List<Alumn>) alumnRepository.findAll();
-//        return alumns.stream().filter((alumn) ->{
-//            if(alumn.getAssignature() == null) return false;
-//            return alumn.getAssignature().getId() == assignatureId;
-//        }).map(AlumnDTO::new).collect(Collectors.toList());
-
         List<Alumn> alumnss = (List<Alumn>) alumnRepository.findAlumnByAssignatureId(assignatureId);
-        return alumnss.stream().map(AlumnDTO::new).collect(Collectors.toList());
+        return alumnss.stream().map((alumn)->{
+            try {
+                alumn.setBirthdate(toolService.changeDateFormat(alumn.getBirthdate()));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            return alumn;
+        }).map(AlumnDTO::new).collect(Collectors.toList());
     }
 
-    @Override
-    public String deleteAlumn(AlumnDTO alumn) {
-        return null;
-    }
 }

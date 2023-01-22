@@ -14,8 +14,6 @@ public interface IAssignatureService {
     String deleteAssignature(AssignatureDTO assignature);
     String updateAssignature(AssignatureDTO assignature);
     List<AssignatureDTO> getAssignatures();
-    String saveUser(AlumnDTO alumn);
-    String deleteAlumn(AlumnDTO alumn);
     List<AlumnDTO> getAssignatureAlumns(int assignatureId);
 
 

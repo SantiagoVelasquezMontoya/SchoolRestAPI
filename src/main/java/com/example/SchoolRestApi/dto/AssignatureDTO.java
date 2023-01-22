@@ -29,12 +29,15 @@ public class AssignatureDTO {
     private List<AlumnDTO> alumns;
     private TeacherDTO teacher;
 
-    public AssignatureDTO(Integer id, String schedule, String topic, List<AlumnDTO> alumns, TeacherDTO teacher) {
+    private GradesDTO grades;
+
+    public AssignatureDTO(Integer id, String schedule, String topic, List<AlumnDTO> alumns, TeacherDTO teacher, GradesDTO grades) {
         this.id = id;
         this.schedule = schedule;
         this.topic = topic;
         this.alumns = alumns;
         this.teacher = teacher;
+        this.grades = grades;
     }
 
     public AssignatureDTO(Assignature assignature) {
@@ -44,12 +47,19 @@ public class AssignatureDTO {
         if(assignature.getAlumns() != null){
             this.alumns = assignature.getAlumns().stream().map(AlumnDTO::new).collect(Collectors.toList());
         }
-        //this.teacher = assignature.getTeacher();
         this.teacher = new TeacherDTO(assignature.getTeacher());
-
+        this.grades = new GradesDTO(assignature.getGrades());
     }
 
     public AssignatureDTO() {
+    }
+
+    public GradesDTO getGrades() {
+        return grades;
+    }
+
+    public void setGrades(GradesDTO grades) {
+        this.grades = grades;
     }
 
     public Integer getId() {
@@ -96,4 +106,5 @@ public class AssignatureDTO {
     public void setTeacher(TeacherDTO teacher) {
         this.teacher = teacher;
     }
+
 }

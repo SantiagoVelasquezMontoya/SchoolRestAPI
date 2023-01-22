@@ -5,10 +5,7 @@ import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.dto.AssignatureDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
@@ -24,12 +21,15 @@ public class Alumn {
     private String birthdate;
     private Integer age;
 
-
     @ManyToOne
     @JoinColumn(name = "assignature_id")
     @JsonBackReference
     @JsonIgnore
     private Assignature assignature;
+
+
+    @OneToOne
+    private Grades grades;
 
     public Assignature getAssignature() {
         return assignature;
@@ -40,12 +40,13 @@ public class Alumn {
     }
 
 
-    public Alumn(Integer id, String firstname, String lastname, String birthdate, Integer age) {
+    public Alumn(Integer id, String firstname, String lastname, String birthdate, Integer age, Grades grades) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthdate = birthdate;
         this.age = age;
+        this.grades = grades;
     }
 
     public Alumn(AlumnDTO alumnDTO) {
@@ -55,6 +56,15 @@ public class Alumn {
         this.birthdate = alumnDTO.getBirthdate();
         this.age = alumnDTO.getAge();
         this.assignature = alumnDTO.getAssignature();
+        this.grades = new Grades(alumnDTO.getGrades());
+    }
+
+    public Grades getGrades() {
+        return grades;
+    }
+
+    public void setGrades(Grades grades) {
+        this.grades = grades;
     }
 
     public Alumn() {
