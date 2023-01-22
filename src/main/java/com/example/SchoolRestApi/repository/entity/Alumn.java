@@ -28,6 +28,8 @@ public class Alumn {
     private Assignature assignature;
 
 
+    //Corregir a @ManyToOne Asociation, Grades Una asignatura si puede tener varias notas
+    //Cada una asignada a un estudiante con @OneToOne
     @OneToOne
     private Grades grades;
 
@@ -56,7 +58,9 @@ public class Alumn {
         this.birthdate = alumnDTO.getBirthdate();
         this.age = alumnDTO.getAge();
         this.assignature = alumnDTO.getAssignature();
-        this.grades = new Grades(alumnDTO.getGrades());
+        if(alumnDTO.getGrades() != null){
+            this.grades = new Grades(alumnDTO.getGrades());
+        }
     }
 
     public Grades getGrades() {
@@ -109,4 +113,5 @@ public class Alumn {
     public void setAge(Integer age) {
         this.age = age;
     }
+
 }

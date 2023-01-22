@@ -48,7 +48,9 @@ public class AssignatureDTO {
             this.alumns = assignature.getAlumns().stream().map(AlumnDTO::new).collect(Collectors.toList());
         }
         this.teacher = new TeacherDTO(assignature.getTeacher());
-        this.grades = new GradesDTO(assignature.getGrades());
+        if(assignature.getGrades() != null){
+            this.grades = new GradesDTO(assignature.getGrades());
+        }
     }
 
     public AssignatureDTO() {

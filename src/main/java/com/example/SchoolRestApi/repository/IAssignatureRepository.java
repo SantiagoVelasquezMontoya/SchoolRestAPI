@@ -19,4 +19,5 @@ public interface IAssignatureRepository extends CrudRepository<Assignature, Inte
     Optional<Assignature> findByTeacher(Teacher teacher);
 
 
+
 }

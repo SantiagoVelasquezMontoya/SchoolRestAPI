@@ -44,12 +44,12 @@ public class AlumnController {
 
 
     @GetMapping()
-    public ResponseEntity<List<AlumnDTO>> getAll(){
+    public ResponseEntity<?> getAll(){
         try{
             return ResponseEntity.ok()
                     .body(iAlumnService.getAll());
         } catch (Exception e){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 

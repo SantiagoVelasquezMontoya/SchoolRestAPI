@@ -60,7 +60,9 @@ public class AlumnDTO {
         this.birthdate = alumn.getBirthdate();
         this.age = alumn.getAge();
         this.assignature = alumn.getAssignature();
-        this.grades = new GradesDTO(alumn.getGrades());
+        if(alumn.getGrades() != null){
+            this.grades = new GradesDTO(alumn.getGrades());
+        }
     }
 
     public GradesDTO getGrades() {
