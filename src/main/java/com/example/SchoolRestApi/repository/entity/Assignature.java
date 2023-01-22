@@ -24,7 +24,7 @@ public class Assignature {
     private List<Alumn> alumns;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teacher_id")
     @JsonManagedReference
     @JsonIgnore
@@ -49,17 +49,17 @@ public class Assignature {
         this.schedule = assignatureDTO.getSchedule();
         this.topic = assignatureDTO.getTopic();
         if(assignatureDTO.getAlumns() != null){
-            this.alumns = assignatureDTO.getAlumns().stream().map(Alumn::new).collect(Collectors.toList());
+            this.alumns = assignatureDTO.getAlumns();
         } else{
             this.alumns = new ArrayList<>();
         }
         if(assignatureDTO.getTeacher() != null){
-            this.teacher = new Teacher(assignatureDTO.getTeacher());
+            this.teacher = assignatureDTO.getTeacher();
         } else{
             this.teacher = new Teacher();
         }
         if(assignatureDTO.getGrades() != null){
-            this.grades = assignatureDTO.getGrades().stream().map(Grades::new).collect(Collectors.toList());
+            this.grades = assignatureDTO.getGrades();
         } else{
             this.grades = new ArrayList<>();
         }

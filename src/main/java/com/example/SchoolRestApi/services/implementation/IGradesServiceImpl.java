@@ -9,6 +9,7 @@ import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.repository.entity.Assignature;
 import com.example.SchoolRestApi.repository.entity.Grades;
 import com.example.SchoolRestApi.services.IGradesService;
+import com.example.SchoolRestApi.services.utilities.GradesMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +24,13 @@ public class IGradesServiceImpl  implements IGradesService {
     private final IAlumnRepository alumnRepository;
     private final IAssignatureRepository assignatureRepository;
 
-    public IGradesServiceImpl(IGradesRepository gradesRepository, IAlumnRepository alumnRepository, IAssignatureRepository assignatureRepository) {
+    private final GradesMapper gradesMapper;
+
+    public IGradesServiceImpl(IGradesRepository gradesRepository, IAlumnRepository alumnRepository, IAssignatureRepository assignatureRepository, GradesMapper gradesMapper) {
         this.gradesRepository = gradesRepository;
         this.alumnRepository = alumnRepository;
         this.assignatureRepository = assignatureRepository;
+        this.gradesMapper = gradesMapper;
     }
 
     @Override
@@ -76,8 +80,7 @@ public class IGradesServiceImpl  implements IGradesService {
     @Override
     public List<GradesDTO> getAllGrades() {
         List<Grades> gradesList = (List<Grades>) gradesRepository.findAll();
-        System.out.println(gradesList);
-        return gradesList.stream().map(GradesDTO::new).collect(Collectors.toList());
+        return gradesList.stream().map(gradesMapper::toGradesDTO).collect(Collectors.toList());
 
     }
 

@@ -76,7 +76,7 @@ public class ITeacherServiceImpl implements ITeacherService {
 //                .collect(Collectors.toList());
         return teacherList
                 .stream()
-                .map(TeacherDTO::new)
+                .map(teacherMapper::toTeacherDTO)
                 .collect(Collectors.toList());
     }
 

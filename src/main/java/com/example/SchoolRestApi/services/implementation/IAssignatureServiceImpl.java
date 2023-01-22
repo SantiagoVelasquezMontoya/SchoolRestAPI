@@ -85,7 +85,7 @@ public class IAssignatureServiceImpl implements IAssignatureService {
         List<Assignature> assignatureList = (List<Assignature>) assignatureRepository.findAll();
         return assignatureList
                 .stream()
-                .map(AssignatureDTO::new)
+                .map(assignatureMapper::toAssignatureDTO)
                 .collect(Collectors.toList());
     }
 

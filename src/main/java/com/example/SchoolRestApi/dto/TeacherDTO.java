@@ -23,18 +23,18 @@ public class TeacherDTO {
     private Integer age;
 
     //private Assignature assignature;
-    List<AssignatureDTO> assignature;
+    List<Assignature> assignature;
 
-    public List<AssignatureDTO> getAssignature() {
+    public List<Assignature> getAssignature() {
         return assignature;
     }
 
 
-    public void setAssignature(List<AssignatureDTO> assignature) {
+    public void setAssignature(List<Assignature> assignature) {
         this.assignature = assignature;
     }
 
-    public TeacherDTO(Integer id, String firstname, String lastname, Integer age, List<AssignatureDTO> assignature) {
+    public TeacherDTO(Integer id, String firstname, String lastname, Integer age, List<Assignature> assignature) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -48,7 +48,7 @@ public class TeacherDTO {
         this.lastname = teacher.getLastname();
         this.age = teacher.getAge();
         if(teacher.getAssignature() != null){
-            this.assignature = teacher.getAssignature().stream().map(AssignatureDTO::new).collect(Collectors.toList());
+            this.assignature = teacher.getAssignature();
         } else{
             this.assignature= new ArrayList<>();
         }

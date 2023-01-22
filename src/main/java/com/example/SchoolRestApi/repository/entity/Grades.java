@@ -29,7 +29,7 @@ public class Grades {
     @JsonIgnore
     private Alumn alumn;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assignature_id", insertable = false, updatable = false)
     @JsonBackReference
     @JsonIgnore
@@ -46,7 +46,7 @@ public class Grades {
         this.id = gradesDTO.getId();
         this.rating = gradesDTO.getRating();
         if(gradesDTO.getAlumn() != null){
-            this.alumn = new Alumn(gradesDTO.getAlumn());
+            this.alumn = gradesDTO.getAlumn();
         }
         if(gradesDTO.getAssignature() != null){
             this.assignature = new Assignature(gradesDTO.getAssignature());

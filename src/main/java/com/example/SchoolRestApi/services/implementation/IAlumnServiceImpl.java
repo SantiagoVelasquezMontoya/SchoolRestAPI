@@ -3,14 +3,14 @@ package com.example.SchoolRestApi.services.implementation;
 import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.repository.IAlumnRepository;
 import com.example.SchoolRestApi.repository.IAssignatureRepository;
+import com.example.SchoolRestApi.repository.ITeacherRepository;
 import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.repository.entity.Assignature;
+import com.example.SchoolRestApi.repository.entity.Teacher;
 import com.example.SchoolRestApi.services.IAlumnService;
+import com.example.SchoolRestApi.services.utilities.AlumnMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,13 +20,18 @@ public class IAlumnServiceImpl implements IAlumnService {
 
     public final ToolService toolService;
 
-    IAlumnRepository alumnRepository;
-    IAssignatureRepository assignatureRepository;
+    public final IAlumnRepository alumnRepository;
+    public final IAssignatureRepository assignatureRepository;
 
-    public IAlumnServiceImpl(ToolService toolService, IAlumnRepository alumnRepository, IAssignatureRepository assignatureRepository) {
+    public final AlumnMapper alumnMapper;
+    public final ITeacherRepository teacherRepository;
+
+    public IAlumnServiceImpl(ToolService toolService, IAlumnRepository alumnRepository, IAssignatureRepository assignatureRepository, AlumnMapper alumnMapper, ITeacherRepository teacherRepository) {
         this.toolService = toolService;
         this.alumnRepository = alumnRepository;
         this.assignatureRepository = assignatureRepository;
+        this.alumnMapper = alumnMapper;
+        this.teacherRepository = teacherRepository;
     }
 
     @Override
@@ -75,18 +80,21 @@ public class IAlumnServiceImpl implements IAlumnService {
         List<Alumn> alumniList = (List<Alumn>) alumnRepository.findAll();
         return  alumniList
                 .stream()
-                .map(AlumnDTO::new)
+                .map(alumnMapper::toAlumnDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public String enroll(AlumnDTO alumn) {
         Optional<Alumn> targetAlumn = alumnRepository.findById(alumn.getId());
-
-        if(targetAlumn.isPresent()){
-            targetAlumn.get().setAssignature(new Assignature(alumn.getAssignature()));
+        Optional<Assignature> targetAssignature = assignatureRepository.findById(alumn.getAssignature().getId());
+        Optional<Teacher> targetTeacher = teacherRepository.findById(targetAssignature.get().getTeacher().getId());
+        if(targetAlumn.isPresent() && targetAssignature.isPresent() && targetTeacher.isPresent()) {
+            targetAlumn.get().setAssignature(alumn.getAssignature());
             alumnRepository.save(targetAlumn.get());
+            targetAssignature.get().setTeacher(targetTeacher.get());
+            assignatureRepository.save(targetAssignature.get());
         }
-        return "Alumn was successfully enrolled";
+        return "Alumni was successfully enrolled";
     }
 }

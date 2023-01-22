@@ -22,14 +22,14 @@ public class Alumn {
     private String birthdate;
     private Integer age;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assignature_id")
     @JsonBackReference
     @JsonIgnore
     private Assignature assignature;
 
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @JsonManagedReference
     @JsonIgnore
     private Grades grades;
@@ -60,7 +60,7 @@ public class Alumn {
         this.birthdate = alumnDTO.getBirthdate();
         this.age = alumnDTO.getAge();
         if(alumnDTO.getGrades() != null){
-            this.grades = new Grades(alumnDTO.getGrades());
+            this.grades = alumnDTO.getGrades();
         }
         if(alumnDTO.getAssignature() != null){
             this.assignature = new Assignature(alumnDTO.getAssignature());

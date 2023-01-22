@@ -2,6 +2,7 @@ package com.example.SchoolRestApi.dto;
 
 import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.repository.entity.Assignature;
+import com.example.SchoolRestApi.repository.entity.Grades;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -27,22 +28,22 @@ public class AlumnDTO {
     private String birthdate;
     private Integer age;
 
-    private AssignatureDTO assignature;
+    private Assignature assignature;
 
-    private GradesDTO grades;
+    private Grades grades;
 
 
 
-    public void setAssignature(AssignatureDTO assignature){
+    public void setAssignature(Assignature assignature){
         this.assignature = assignature;
     }
 
-    public AssignatureDTO getAssignature(){
+    public Assignature getAssignature(){
         return this.assignature;
     }
 
 
-    public AlumnDTO(Integer id, String firstname, String lastname, String birthdate, Integer age, GradesDTO grades, AssignatureDTO assignature) {
+    public AlumnDTO(Integer id, String firstname, String lastname, String birthdate, Integer age, Grades grades, Assignature assignature) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -61,22 +62,22 @@ public class AlumnDTO {
         this.birthdate = alumn.getBirthdate();
         this.age = alumn.getAge();
         if(alumn.getGrades() != null){
-            this.grades = new GradesDTO(alumn.getGrades());
+            this.grades = alumn.getGrades();
         } else{
-            this.grades = new GradesDTO();
+            this.grades = new Grades();
         }
         if(alumn.getAssignature() != null){
-            this.assignature = new AssignatureDTO(alumn.getAssignature());
+            this.assignature = alumn.getAssignature();
         } else{
-            this.assignature = new AssignatureDTO();
+            this.assignature = new Assignature();
         }
     }
 
-    public GradesDTO getGrades() {
+    public Grades getGrades() {
         return grades;
     }
 
-    public void setGrades(GradesDTO grades) {
+    public void setGrades(Grades grades) {
         this.grades = grades;
     }
 

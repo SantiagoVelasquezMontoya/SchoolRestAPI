@@ -1,5 +1,7 @@
 package com.example.SchoolRestApi.dto;
 
+import com.example.SchoolRestApi.repository.entity.Alumn;
+import com.example.SchoolRestApi.repository.entity.Assignature;
 import com.example.SchoolRestApi.repository.entity.Grades;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -14,10 +16,10 @@ public class GradesDTO {
     @Min(0)
     @Max(value = 5 , message="Maximum rating is 5")
     private Integer rating;
-    private AlumnDTO alumn;
-    private AssignatureDTO assignature;
+    private Alumn alumn;
+    private Assignature assignature;
 
-    public GradesDTO(Integer id, Integer rating, AlumnDTO alumn, AssignatureDTO assignature) {
+    public GradesDTO(Integer id, Integer rating, Alumn alumn, Assignature assignature) {
         this.id = id;
         this.rating = rating;
         this.alumn = alumn;
@@ -28,13 +30,13 @@ public class GradesDTO {
         this.id = grades.getId();
         this.rating = grades.getRating();
         if(grades.getAlumn() != null){
-            this.alumn = new AlumnDTO(grades.getAlumn());
+            this.alumn = grades.getAlumn();
         }
          else{
-             this.alumn = new AlumnDTO();
+             this.alumn = new Alumn();
         }
         if(grades.getAssignature() != null){
-            this.assignature = new AssignatureDTO(grades.getAssignature());
+            this.assignature = grades.getAssignature();
         }
     }
 
@@ -58,19 +60,19 @@ public class GradesDTO {
         this.rating = rating;
     }
 
-    public AlumnDTO getAlumn() {
+    public Alumn getAlumn() {
         return alumn;
     }
 
-    public void setAlumn(AlumnDTO alumn) {
+    public void setAlumn(Alumn alumn) {
         this.alumn = alumn;
     }
 
-    public AssignatureDTO getAssignature() {
+    public Assignature getAssignature() {
         return assignature;
     }
 
-    public void setAssignature(AssignatureDTO assignature) {
+    public void setAssignature(Assignature assignature) {
         this.assignature = assignature;
     }
 

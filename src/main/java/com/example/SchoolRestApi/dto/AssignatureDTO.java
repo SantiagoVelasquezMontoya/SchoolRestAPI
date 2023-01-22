@@ -2,6 +2,7 @@ package com.example.SchoolRestApi.dto;
 
 import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.repository.entity.Assignature;
+import com.example.SchoolRestApi.repository.entity.Grades;
 import com.example.SchoolRestApi.repository.entity.Teacher;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -27,12 +28,12 @@ public class AssignatureDTO {
     @Pattern(regexp = "^.{3,200}$",  message = "The topic must have between 3 and 200 characters")
     @NotBlank(message = "Topic is required")
     private String topic;
-    private List<AlumnDTO> alumns;
-    private TeacherDTO teacher;
+    private List<Alumn> alumns;
+    private Teacher teacher;
 
-    private List<GradesDTO> grades;
+    private List<Grades> grades;
 
-    public AssignatureDTO(Integer id, String schedule, String topic, List<AlumnDTO> alumns, TeacherDTO teacher, List<GradesDTO> grades) {
+    public AssignatureDTO(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher, List<Grades> grades) {
         this.id = id;
         this.schedule = schedule;
         this.topic = topic;
@@ -46,17 +47,17 @@ public class AssignatureDTO {
         this.schedule = assignature.getSchedule();
         this.topic = assignature.getTopic();
         if(assignature.getAlumns() != null){
-            this.alumns = assignature.getAlumns().stream().map(AlumnDTO::new).collect(Collectors.toList());
+            this.alumns = assignature.getAlumns();
         } else{
             this.alumns = new ArrayList<>();
         }
         if(assignature.getTeacher() != null){
-            this.teacher = new TeacherDTO(assignature.getTeacher());
+            this.teacher = assignature.getTeacher();
         } else{
-            this.teacher = new TeacherDTO();
+            this.teacher = new Teacher();
         }
         if(assignature.getGrades() != null){
-            this.grades = assignature.getGrades().stream().map(GradesDTO::new).collect(Collectors.toList());
+            this.grades = assignature.getGrades();
         } else{
             this.grades = new ArrayList<>();
         }
@@ -65,11 +66,11 @@ public class AssignatureDTO {
     public AssignatureDTO() {
     }
 
-    public List<GradesDTO> getGrades() {
+    public List<Grades> getGrades() {
         return grades;
     }
 
-    public void setGrades(List<GradesDTO> grades) {
+    public void setGrades(List<Grades> grades) {
         this.grades = grades;
     }
 
@@ -97,24 +98,24 @@ public class AssignatureDTO {
         this.topic = topic;
     }
 
-    public List<AlumnDTO> getAlumns() {
+    public List<Alumn> getAlumns() {
         return alumns;
     }
 
-    public void addAlumn(AlumnDTO alumnDTO){
+    public void addAlumn(Alumn alumnDTO){
         this.alumns.add(alumnDTO);
     }
 
-    public void setAlumns(List<AlumnDTO> alumns) {
+    public void setAlumns(List<Alumn> alumns) {
         this.alumns = alumns;
     }
 
 
-    public TeacherDTO getTeacher() {
+    public Teacher getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(TeacherDTO teacher) {
+    public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
 
