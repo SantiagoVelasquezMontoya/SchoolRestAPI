@@ -14,4 +14,6 @@ public interface IGradesService {
 
     List<GradesDTO>  getAllGrades();
 
+     String createGrades(int id, int rating, int alumniid, int assignatureid);
+
 }

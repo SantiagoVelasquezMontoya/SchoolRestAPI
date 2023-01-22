@@ -29,10 +29,12 @@ public class Assignature {
     @JsonIgnore
     private Teacher teacher;
 
-    @OneToOne
-    private Grades grades;
+    @OneToMany(mappedBy = "assignature", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @JsonIgnore
+    private List<Grades> grades;
 
-    public Assignature(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher, Grades grades) {
+    public Assignature(Integer id, String schedule, String topic, List<Alumn> alumns, Teacher teacher, List<Grades> grades) {
         this.id = id;
         this.schedule = schedule;
         this.topic = topic;
@@ -50,7 +52,7 @@ public class Assignature {
         }
         this.teacher = new Teacher(assignatureDTO.getTeacher());
         if(assignatureDTO.getGrades() != null){
-            this.grades = new Grades(assignatureDTO.getGrades());
+            this.grades = assignatureDTO.getGrades().stream().map(Grades::new).collect(Collectors.toList());
         }
     }
 
@@ -101,11 +103,11 @@ public class Assignature {
         this.teacher = teacher;
     }
 
-    public Grades getGrades() {
+    public List<Grades> getGrades() {
         return grades;
     }
 
-    public void setGrades(Grades grades) {
+    public void setGrades(List<Grades> grades) {
         this.grades = grades;
     }
 }

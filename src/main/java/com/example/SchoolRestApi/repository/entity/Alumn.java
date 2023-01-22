@@ -5,6 +5,7 @@ import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.dto.AssignatureDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -28,9 +29,9 @@ public class Alumn {
     private Assignature assignature;
 
 
-    //Corregir a @ManyToOne Asociation, Grades Una asignatura si puede tener varias notas
-    //Cada una asignada a un estudiante con @OneToOne
-    @OneToOne
+    @OneToOne()
+    @JsonManagedReference
+    @JsonIgnore
     private Grades grades;
 
     public Assignature getAssignature() {
@@ -42,13 +43,14 @@ public class Alumn {
     }
 
 
-    public Alumn(Integer id, String firstname, String lastname, String birthdate, Integer age, Grades grades) {
+    public Alumn(Integer id, String firstname, String lastname, String birthdate, Integer age, Grades grades, Assignature assignature) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthdate = birthdate;
         this.age = age;
         this.grades = grades;
+        this.assignature = assignature;
     }
 
     public Alumn(AlumnDTO alumnDTO) {
@@ -57,9 +59,11 @@ public class Alumn {
         this.lastname = alumnDTO.getLastname();
         this.birthdate = alumnDTO.getBirthdate();
         this.age = alumnDTO.getAge();
-        this.assignature = alumnDTO.getAssignature();
         if(alumnDTO.getGrades() != null){
             this.grades = new Grades(alumnDTO.getGrades());
+        }
+        if(alumnDTO.getAssignature() != null){
+            this.assignature = new Assignature(alumnDTO.getAssignature());
         }
     }
 
@@ -113,5 +117,6 @@ public class Alumn {
     public void setAge(Integer age) {
         this.age = age;
     }
+
 
 }

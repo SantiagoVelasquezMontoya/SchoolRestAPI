@@ -42,13 +42,14 @@ public class AlumnDTO {
     }
 
 
-    public AlumnDTO(Integer id, String firstname, String lastname, String birthdate, Integer age, GradesDTO grades) {
+    public AlumnDTO(Integer id, String firstname, String lastname, String birthdate, Integer age, GradesDTO grades, Assignature assignature) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthdate = birthdate;
         this.age = age;
         this.grades = grades;
+        this.assignature = assignature;
     }
 
 
@@ -59,9 +60,11 @@ public class AlumnDTO {
         this.lastname = alumn.getLastname();
         this.birthdate = alumn.getBirthdate();
         this.age = alumn.getAge();
-        this.assignature = alumn.getAssignature();
         if(alumn.getGrades() != null){
             this.grades = new GradesDTO(alumn.getGrades());
+        }
+        if(alumn.getAssignature() != null){
+            this.assignature = alumn.getAssignature();
         }
     }
 

@@ -54,4 +54,21 @@ public class GradesController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+    @PostMapping("test")
+    public ResponseEntity<?> createGrades(@RequestBody gradeObject object){
+        try{
+            return ResponseEntity.status(HttpStatus.CREATED).
+                    body(igradesService.createGrades(object.id, object.rating, object.alumnid, object.assignatureid));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    record gradeObject(
+            int id,
+            int rating,
+            int alumnid,
+            int assignatureid
+    ){}
 }

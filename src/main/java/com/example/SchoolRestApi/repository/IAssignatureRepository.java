@@ -18,6 +18,11 @@ public interface IAssignatureRepository extends CrudRepository<Assignature, Inte
     @Query("select a from Assignature a where a.teacher = ?1")
     Optional<Assignature> findByTeacher(Teacher teacher);
 
+    @Query("select a from Assignature a inner join a.alumns alumns where alumns.id = ?1")
+    Optional<Assignature> findByAlumns_Id(Integer id);
+
+
+
 
 
 }

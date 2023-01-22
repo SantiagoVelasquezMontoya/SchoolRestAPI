@@ -4,6 +4,9 @@ import com.example.SchoolRestApi.repository.entity.Grades;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class GradesDTO {
 
     private Integer id;
@@ -22,10 +25,17 @@ public class GradesDTO {
     }
 
     public GradesDTO(Grades grades) {
-        this.id = grades.getRating();
+        this.id = grades.getId();
         this.rating = grades.getRating();
-        this.alumn = new AlumnDTO(grades.getAlumn());
-        this.assignature = new AssignatureDTO(grades.getAssignature());
+        if(grades.getAlumn() != null){
+            this.alumn = new AlumnDTO(grades.getAlumn());
+        }
+         else{
+             this.alumn = new AlumnDTO();
+        }
+        if(grades.getAssignature() != null){
+            this.assignature = new AssignatureDTO(grades.getAssignature());
+        }
     }
 
 

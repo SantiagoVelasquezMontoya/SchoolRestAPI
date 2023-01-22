@@ -5,6 +5,7 @@ import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.services.IAlumnService;
 import com.example.SchoolRestApi.services.implementation.ValidationHandler;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
@@ -93,6 +94,5 @@ public class AlumnController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-
 
 }

@@ -2,6 +2,7 @@ package com.example.SchoolRestApi.services.implementation;
 
 import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.repository.IAlumnRepository;
+import com.example.SchoolRestApi.repository.IAssignatureRepository;
 import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.services.IAlumnService;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,12 @@ public class IAlumnServiceImpl implements IAlumnService {
     public final ToolService toolService;
 
     IAlumnRepository alumnRepository;
+    IAssignatureRepository assignatureRepository;
 
-    public IAlumnServiceImpl(ToolService toolService, IAlumnRepository alumnRepository) {
+    public IAlumnServiceImpl(ToolService toolService, IAlumnRepository alumnRepository, IAssignatureRepository assignatureRepository) {
         this.toolService = toolService;
         this.alumnRepository = alumnRepository;
+        this.assignatureRepository = assignatureRepository;
     }
 
     @Override
@@ -81,10 +84,11 @@ public class IAlumnServiceImpl implements IAlumnService {
     @Override
     public String enroll(AlumnDTO alumn) {
         Optional<Alumn> targetAlumn = alumnRepository.findById(alumn.getId());
+
         if(targetAlumn.isPresent()){
             targetAlumn.get().setAssignature(alumn.getAssignature());
             alumnRepository.save(targetAlumn.get());
         }
-        return null;
+        return "Alumn was successfully enrolled";
     }
 }

@@ -2,8 +2,15 @@ package com.example.SchoolRestApi.repository.entity;
 
 import com.example.SchoolRestApi.dto.AlumnDTO;
 import com.example.SchoolRestApi.dto.GradesDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Grades {
@@ -13,12 +20,19 @@ public class Grades {
 
     private Integer rating;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="alumn_id",referencedColumnName = "id")
-    private Alumn alumn;
+    //OneToOne Con alumno
+    //ManytoOne con Asignatura
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="assignature_id",referencedColumnName = "id")
+    @JoinColumn(name="alumn_id",referencedColumnName = "id")
+    @JsonBackReference
+    @JsonIgnore
+    private Alumn alumn;
+
+    @ManyToOne
+    @JoinColumn(name = "assignature_id")
+    @JsonBackReference
+    @JsonIgnore
     private Assignature assignature;
 
     public Grades(Integer id, Integer rating, Alumn alumn, Assignature assignature) {
@@ -31,8 +45,12 @@ public class Grades {
     public Grades(GradesDTO gradesDTO) {
         this.id = gradesDTO.getId();
         this.rating = gradesDTO.getRating();
-        this.alumn = new Alumn(gradesDTO.getAlumn());
-        this.assignature = new Assignature(gradesDTO.getAssignature());
+        if(gradesDTO.getAlumn() != null){
+            this.alumn = new Alumn(gradesDTO.getAlumn());
+        }
+        if(gradesDTO.getAssignature() != null){
+            this.assignature = new Assignature(gradesDTO.getAssignature());
+        }
     }
 
     public Grades() {
@@ -79,4 +97,5 @@ public class Grades {
                 ", assignature=" + assignature +
                 '}';
     }
+
 }

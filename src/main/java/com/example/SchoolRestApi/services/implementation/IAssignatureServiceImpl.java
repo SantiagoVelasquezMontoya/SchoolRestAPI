@@ -7,6 +7,7 @@ import com.example.SchoolRestApi.repository.IAssignatureRepository;
 import com.example.SchoolRestApi.repository.ITeacherRepository;
 import com.example.SchoolRestApi.repository.entity.Alumn;
 import com.example.SchoolRestApi.repository.entity.Assignature;
+import com.example.SchoolRestApi.repository.entity.Teacher;
 import com.example.SchoolRestApi.services.IAssignatureService;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,10 @@ public class IAssignatureServiceImpl implements IAssignatureService {
         } else {
             if(!toolService.isAssignatureTopicValid(assignature.getTopic())) {
                 return "Assignature Topic can only have Letters and Numbers with a maximum length of 200 characters";
+            }
+            Optional<Teacher> targetTeacher= teacherRepository.findById(assignature.getTeacher().getId());
+            if(targetTeacher.isEmpty()){
+                return "Can't find teacher with id: " + assignature.getTeacher().getId();
             }
             assignatureRepository.save(new Assignature(assignature));
             return "Assignature was Succesfully saved";
